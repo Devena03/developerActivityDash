@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/developerActivityDash/static/css/main.e6c13ad2.css",
+    "main.js": "/developerActivityDash/static/js/main.445c7d03.js",
+    "static/js/453.7819156a.chunk.js": "/developerActivityDash/static/js/453.7819156a.chunk.js",
+    "index.html": "/developerActivityDash/index.html",
+    "main.e6c13ad2.css.map": "/developerActivityDash/static/css/main.e6c13ad2.css.map",
+    "main.445c7d03.js.map": "/developerActivityDash/static/js/main.445c7d03.js.map",
+    "453.7819156a.chunk.js.map": "/developerActivityDash/static/js/453.7819156a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.445c7d03.js"
+  ]
+}
