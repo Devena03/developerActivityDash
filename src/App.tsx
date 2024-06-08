@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// src/App.tsx
+import React, { useEffect, useState } from 'react';
+import { fetchActivityData } from './services/api';
+import ActivityChart from './components/ActivityChart';
+import ActivityTable from './components/ActivityTable';
+import Filters from './components/Filters';
+import SummaryStatistics from './components/SummaryStatistics';
+import { GlobalStyle, Container } from './styles';
 
-function App() {
+const App: React.FC = () => {
+  const [data, setData] = useState<any[]>([]);
+  const [filteredData, setFilteredData] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const result = await fetchActivityData();
+        setData(result.rows);
+        setFilteredData(result.rows);
+      } catch (error) {
+        setError('Failed to fetch activity data. Please try again later.');
+      }
+    };
+    getData();
+  }, []);
+
+  const handleFilterChange = (filters: any) => {
+    const { date } = filters;
+    if (date) {
+      const filtered = data.filter(row => row.dayWiseActivity.some((activity: any) => activity.date === date));
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(data);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <Container>
+        <h1>Developer Activity Dashboard</h1>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <Filters onFilterChange={handleFilterChange} />
+        <SummaryStatistics data={filteredData} />
+        <ActivityChart data={filteredData} />
+        <ActivityTable data={filteredData} />
+      </Container>
+    </>
   );
-}
+};
 
 export default App;
